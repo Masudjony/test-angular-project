@@ -17,7 +17,7 @@
   border-radius: 1rem;
   box-shadow: 0 15px 35px rgba(15, 23, 42, 0.12);
   padding: 2.5rem;
-  text-align: center;
+  text-align: left;
 }
 
 h1 {
@@ -28,6 +28,91 @@ h1 {
 p {
   margin-bottom: 1.5rem;
   color: #475569;
+}
+
+form {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+fieldset {
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin: 0;
+  background: #f8fafc;
+  display: grid;
+  gap: 1rem;
+}
+
+legend {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #334155;
+}
+
+input[type='text'],
+input[type='password'] {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid #cbd5f5;
+  padding: 0.65rem 0.85rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus {
+  border-color: #6366f1;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.api-list {
+  margin-bottom: 2rem;
+}
+
+.api-list h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.api-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.api-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  gap: 1rem;
+}
+
+.api-details h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.15rem;
+  color: #1e293b;
+}
+
+.api-details p {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
 }
 
 button {
@@ -57,7 +142,11 @@ button:disabled {
   opacity: 0.65;
   cursor: not-allowed;
 }
-
+.message.info {
+  border-color: #bae6fd;
+  background: #e0f2fe;
+  color: #0369a1;
+}
 .message {
   margin-top: 2rem;
   text-align: left;

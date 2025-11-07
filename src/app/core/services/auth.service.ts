@@ -13,7 +13,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private tokens: TokenStorageService) {}
 
-  login(credentials: { username: string; password: string }) {
+  login(credentials: { email: string; password: string }) {
     return this.http.post<AuthResponse>(`${this.api}/token`, credentials).pipe(
       tap(response => this.tokens.saveTokens(response))
     );
