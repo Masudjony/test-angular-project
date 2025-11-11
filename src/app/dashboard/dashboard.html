@@ -1,0 +1,39 @@
+<app-nav></app-nav>
+
+<h1>Dashboard</h1>
+<div class="ParentSectionSection_Components_HTally">
+    <h1 class="TopHeading">Dashboard</h1>
+
+
+    <section class="api-list" *ngIf="isAuthenticated">
+        <h2>Available API calls</h2>
+        <ul>
+            <li *ngFor="let api of apiCalls">
+                <article class="api-card">
+                    <div class="api-details">
+                        <h3>{{ api.label }}</h3>
+                        <p>{{ api.description }}</p>
+                    </div>
+                    <button type="button" (click)="callApi(api.id)" [disabled]="isLoading">
+                        {{ isLoading ? 'Please wait…' : api.label }}
+                    </button>
+                </article>
+            </li>
+        </ul>
+    </section>
+
+    <div class="message info" *ngIf="status && !error && !response">
+        {{ status }}
+    </div>
+
+    <div class="message success" *ngIf="response && !error">
+        <h2>API response</h2>
+        <pre>{{ response }}</pre>
+    </div>
+
+    <div class="message error" *ngIf="error">
+        {{ error }}
+    </div>
+
+
+</div>

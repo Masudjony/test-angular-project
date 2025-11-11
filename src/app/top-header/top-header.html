@@ -1,0 +1,44 @@
+<div class="ParentSectionSection_Components_HTally">
+  <div class="HeaderTop_Dashboard">
+
+    <!-- Calendar Button -->
+    <div class="Calendar_HeaderTop_Dashboard">
+      <label (click)="openCalendarModal()">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0 11.4399H22V16.9999C22 19.7614 19.7614 21.9999 17 21.9999H5C2.23858 21.9999 0 19.7614 0 16.9999V11.4399Z" />
+          <path
+            d="M0 5.87988C0 3.11846 2.23858 0.879883 5 0.879883H17C19.7614 0.879883 22 3.11846 22 5.87988V9.67988H0V5.87988Z" />
+          <ellipse cx="7.24992" cy="5.03992" rx="2.25004" ry="2.16004" fill="white" />
+          <rect x="6.49939" width="1.50003" height="5.04" rx="0.750014" fill="white" />
+          <ellipse cx="14.7491" cy="5.03992" rx="2.25004" ry="2.16004" fill="white" />
+          <rect x="13.9996" width="1.50003" height="5.04" rx="0.750014" fill="white" />
+        </svg>
+        <span (click)="openCalendarModal()">{{ months[selectedMonth] }}, {{ selectedYear }}</span>
+        <svg width="9" height="7" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M4.13229 4.5976C4.44623 4.23136 4.75417 3.87219 5.06204 3.51292C5.70675 2.76065 6.35211 2.00893 6.9955 1.25552C7.13027 1.09769 7.29303 1.00564 7.50323 1.03008C7.71629 1.05484 7.87185 1.16816 7.95445 1.36919C8.03933 1.5758 8.00386 1.76808 7.8624 1.93674C7.6271 2.21723 7.38684 2.49356 7.14868 2.77168C6.29694 3.76638 5.44438 4.7604 4.59427 5.75642C4.43599 5.94186 4.24572 6.04925 4.00431 5.97761C3.8913 5.94407 3.77243 5.87174 3.69579 5.78286C2.58728 4.49773 1.48494 3.20718 0.382493 1.91681C0.174636 1.67348 0.202562 1.3294 0.440034 1.13134C0.683401 0.928412 1.01434 0.963302 1.23226 1.21753C2.16853 2.30997 3.10411 3.40304 4.0401 4.49573C4.06754 4.52782 4.09678 4.55847 4.13229 4.5976Z" />
+        </svg>
+      </label>
+
+      <!-- Calendar Modal -->
+      <div class="modal-overlay" *ngIf="isCalendarOpen" (click)="closeCalendarModal($event)">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+          <span class="close-icon" (click)="closeByIcon()">×</span>
+          <!-- <app-calender-filter [currentMonth]="selectedMonth" [currentYear]="selectedYear"
+            (monthSelected)="onMonthSelected($event)">
+          </app-calender-filter> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- User Image -->
+    <div class="User_Notification_HeaderTop_Dashboard">
+      <img [src]="userImage" (click)="isUserOptionOpen = true" />
+    </div>
+  </div>
+</div>
+
+<!-- <app-user-option [isVisible]="isUserOptionOpen" (closeModal)="isUserOptionOpen=false"
+  (photoUpdated)="handlePhotoUpdate($event)">
+</app-user-option> -->

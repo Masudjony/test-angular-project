@@ -1,0 +1,90 @@
+<div class="illustrationOfSign_Htally_Signup_Container">
+  <div class="illustrationOfSign_Htally">
+    <img src="IllustrationOfAccounts.png" alt="Sign up illustration">
+  </div>
+  <div class="signup-container">
+    <div class="InnerSignupContainer">
+      <h2 class="mb-25">Sign Up</h2>
+  
+      <div class="social-option mb-25">
+        <button class="google-btn">
+          <img src="GmailIcon.png" alt="Google sign up">
+        </button>
+        <button class="google-btn">
+          <img src="FaceBookIcon.png" alt="Facebook sign up">
+        </button>
+      </div>
+  
+      <div class="mb-25 mt-25 divider">
+        <span>Or</span>
+      </div>
+  
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+        <div class="form-group mb-25">
+          <input type="text" formControlName="fullName" placeholder="Type full name" required>
+          @if (signupForm.get('fullName')?.invalid && (signupForm.get('fullName')?.dirty || signupForm.get('fullName')?.touched)) {
+            <div class="error-message">
+              Full name is required
+            </div>
+          }
+        </div>
+  
+        <div class="form-group mb-25">
+          <input type="email" formControlName="email" placeholder="Type Email" required>
+          @if (signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)) {
+            <div class="error-message">
+              @if (signupForm.get('email')?.errors?.['required']) {
+                <span>Email is required</span>
+              }
+              @if (signupForm.get('email')?.errors?.['email']) {
+                <span>Please enter a valid email</span>
+              }
+            </div>
+          }
+        </div>
+  
+        <div class="form-group mb-25">
+          <input type="password" formControlName="password" placeholder="Type Password" required>
+          <div class="hint">Use 8 or more characters with a mix of uppercase, letter, number and symbol.</div>
+          
+          <!-- Password strength indicator -->
+          <div class="strength-indicator">
+            <div class="strength-track">
+              <div class="strength-progress" [style.width.%]="getStrengthPercentage()"></div>
+            </div>
+            <div class="strength-labels">
+              @for (bar of strengthBars; track bar) {
+                <span [class.filled]="bar.filled"></span>
+              }
+            </div>
+          </div>
+          
+          @if (signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)) {
+            <div class="error-message">
+              @if (signupForm.get('password')?.errors?.['required']) {
+                <span>Password is required</span>
+              }
+              @if (signupForm.get('password')?.errors?.['minlength']) {
+                <span>Password must be at least 8 characters</span>
+              }
+              @if (signupForm.get('password')?.errors?.['pattern']) {
+                <span>Password must include uppercase, lowercase, number, and special character</span>
+              }
+            </div>
+          }
+        </div>
+  
+        <button type="submit" [disabled]="signupForm.invalid" class="submit-btn" routerLink="/dashboard">Sign Up</button>
+      </form>
+  
+      <div class="login-link">
+        Already on HTally? <a routerLink="/signIn">Sign In</a>
+      </div>
+      <div class="terms">
+        <label>
+          By creating an account I have read and agree to <a href="#">Terms</a> and <a href="#">Conditions</a>.
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
