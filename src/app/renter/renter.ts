@@ -1,110 +1,87 @@
-
-import { FormsModule } from '@angular/forms';
-import { finalize, map, switchMap } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
-import { Component } from '@angular/core';
-import { AuthService, HouseService, RenterService, TokenStorageService } from './../core/services';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RenterService, TokenStorageService } from '../core/services';
+import { finalize } from 'rxjs/operators';
 import { Nav } from '../nav/nav';
 import { TopHeader } from '../top-header/top-header';
-import { NgFor, NgIf } from '@angular/common';
 
-type ApiTarget = 'renters' | 'houses';
 
-interface ApiCallDefinition {
-  id: ApiTarget;
-  label: string;
-  description: string;
+interface Renter {
+  id: number;
+  accountId: number;
+  renterName: string;
+  renterMobile: string;
+  renterEmail: string;
+  renterPhotoIdNo: string;
+  renterPermanentAddress: string;
+  renterPreviousAddress: string;
+  attachments: any[];
+  status: number;
+  createdOn: string;
+  updatedOn: string | null;
+  actionType: any;
+  appUser: any;
+}
+
+interface ApiResponse {
+  code: string;
+  message: string;
+  refId: string | null;
+  totalRows: number;
+  data: Renter[];
+  totals: any;
 }
 
 @Component({
-  selector: 'app-renter',
+  selector: 'app-renter-list',
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf, Nav, TopHeader,],
+  imports: [CommonModule, Nav, TopHeader],
   templateUrl: './renter.html',
-  styleUrl: './renter.css',
+  styleUrls: ['./renter.css'],
 })
-export class RenterComponent {
-
-  title = 'API POST Call Demo';
-  response: string | null = null;
-  error: string | null = null;
-  isLoading = false;
+export class RenterComponent implements OnInit {
   isAuthenticated = false;
+  isLoading = false;
+  rentersList: any[] = [];
+  error: string | null = null;
   status: string | null = null;
 
-  readonly apiCalls: ApiCallDefinition[] = [
-    {
-      id: 'renters',
-      label: 'Fetch renter list',
-      description: 'Call the renter list endpoint.'
-    },
-    {
-      id: 'houses',
-      label: 'Fetch house list',
-      description: 'Call the house list endpoint.'
-    }
-  ];
-
   constructor(
-    private readonly auth: AuthService,
-    private readonly houses: HouseService,
     private readonly renters: RenterService,
     private readonly tokens: TokenStorageService
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.isAuthenticated = !!this.tokens.accessToken && !this.tokens.isAccessExpired;
     if (this.isAuthenticated) {
-      this.status = 'Existing session detected. Choose an API call to execute.';
+      this.status = 'Loading renter list...';
+      this.fetchRenters();
+    } else {
+      this.error = 'Please log in first.';
     }
   }
 
-  callApi(target: ApiTarget): void {
-    const hasStoredToken = !!this.tokens.accessToken && !this.tokens.isAccessExpired;
-
-    if (!hasStoredToken) {
-      this.error = 'You must be authenticated to call the API.';
-      return;
-    }
-
+  fetchRenters(): void {
     this.isLoading = true;
     this.error = null;
-    this.response = null;
-    this.status = null;
+    this.rentersList = [];
 
-    this.ensureAuthenticated()
-      .pipe(
-        switchMap(() => this.invoke(target)),
-        map(data => JSON.stringify(data, null, 2)),
-        finalize(() => {
-          this.isLoading = false;
-        })
-      )
-      .subscribe({
-        next: response => {
-          this.response = response;
-        },
-        error: err => {
-          console.error(err);
-          this.error = `Failed to fetch data: ${err.message || 'Unknown error'}`;
-        }
-      });
+    this.renters.list<ApiResponse>()
+  .pipe(finalize(() => (this.isLoading = false)))
+  .subscribe({
+    next: (res) => {
+      if (res && res.code === '000') {
+        this.rentersList = res.data || [];
+        this.status = `Total renters: ${res.totalRows}`;
+      } else {
+        this.error = res?.message || 'Unknown error occurred.';
+      }
+    },
+    error: (err) => {
+      this.error = err.message || 'Error fetching renters';
+    },
+  });
+
   }
 
-  private ensureAuthenticated(): Observable<void> {
-    if (this.tokens.accessToken && !this.tokens.isAccessExpired) {
-      return of(void 0);
-    }
-
-    return throwError(() => new Error('Not authenticated. Please sign in first.'));
-  }
-
-  private invoke(target: ApiTarget): Observable<unknown> {
-    switch (target) {
-      case 'renters':
-        return this.renters.list();
-      case 'houses':
-        return this.houses.list();
-      default:
-        return throwError(() => new Error('Unknown API target'));
-    }
-  }
 }
