@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
 import { ApiService } from './api.service';
 
-export interface FetchListRequest {
+export interface HouseListRequest {
   actionType: number;
   service: string;
   pagination: boolean;
@@ -11,30 +10,25 @@ export interface FetchListRequest {
   rowCount?: number;
   filters?: Record<string, unknown>;
 }
-export interface FetchListOverrides extends Partial<FetchListRequest> {}
-
-export interface FetchListResponse<T = unknown> {
-  data: T[];
-  total: number;
-}
+export interface HouseListOverrides extends Partial<HouseListRequest> {}
 
 @Injectable({ providedIn: 'root' })
 export class HouseService {
   private readonly listEndpoint = 'house/list';
-  private readonly defaultListRequest: FetchListRequest = {
+  private readonly defaultListRequest: HouseListRequest = {
     actionType: 3,
     service: 'HOUSE_LIST',
     pagination: false
   };
 
-  constructor(private api: ApiService) {}
+   constructor(private readonly api: ApiService) {}
 
-  list<T = unknown>(params: FetchListOverrides = {}): Observable<FetchListResponse<T>> {
-    const payload: FetchListRequest = {
+ list<T = unknown>(overrides: HouseListOverrides = {}): Observable<T> {
+    const payload: HouseListRequest = {
       ...this.defaultListRequest,
-      ...params
+      ...overrides
     };
 
-    return this.api.post<FetchListResponse<T>>(this.listEndpoint, payload);
+    return this.api.post<T>(this.listEndpoint, payload);
   }
 }

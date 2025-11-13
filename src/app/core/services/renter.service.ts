@@ -11,7 +11,6 @@ export interface RenterListRequest {
   rowCount?: number;
   filters?: Record<string, unknown>;
 }
-
 export interface RenterListOverrides extends Partial<RenterListRequest> {}
 
 @Injectable({ providedIn: 'root' })
