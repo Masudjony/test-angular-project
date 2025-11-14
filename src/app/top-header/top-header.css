@@ -1,9 +1,10 @@
 .ParentSectionSection_Components_HTally {
     width: 82%;
-    /* height: 100px; */
+    height: auto !important;
     padding: 50px;
-    padding-top: 40px;
+    padding-top: 40px !important;
     padding-bottom: 30px;
+    margin-top: 0;
     float: right;
     color: #9799CB;
     font-family: "Instrument Sans", sans-serif;

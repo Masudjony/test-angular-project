@@ -1,0 +1,70 @@
+.ParentSectionSection_Components_HTally {
+    width: 82%;
+    height: 100%;
+    padding: 50px;
+    padding-top: 0;
+    margin-top: 110px;
+    float: right;
+    color: #9799CB;
+    font-family: "Instrument Sans", sans-serif;
+
+    h1.TopHeading {
+        position: absolute;
+        top: 18px;
+        margin-bottom: 0;
+        color: #1F2641;
+        letter-spacing: -0.5px;
+    }
+}
+
+.Body_Components_Htally {
+    background: white;
+    border-radius: 30px;
+
+    .leftPart_Dashboard {
+        float: left;
+        width: 50%;
+    }
+
+    .RightPart_Dashboard {
+        float: right;
+        width: 50%;
+    }
+}
+
+
+@media only screen and (max-width: 1700px) {
+    .ParentSectionSection_Components_HTally {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .ParentSectionSection_Components_HTally {
+        width: 76%;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+    .ParentSectionSection_Components_HTally {
+        width: 73%;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .ParentSectionSection_Components_HTally {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .ParentSectionSection_Components_HTally {
+        width: 67%;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .ParentSectionSection_Components_HTally {
+        width: 100%;
+    }
+}

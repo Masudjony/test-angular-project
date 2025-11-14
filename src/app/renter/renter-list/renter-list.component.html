@@ -1,1 +1,25 @@
-<p>renter-list works!</p>
+<div class="ParentSectionSection_Components_HTally">
+  <h1 class="TopHeading">Renter List</h1>
+
+  <section class="api-list" *ngIf="isAuthenticated">
+    <div class="message info" *ngIf="isLoading">{{ status }}</div>
+    <div class="message error" *ngIf="error">{{ error }}</div>
+
+    <ul *ngIf="!isLoading && rentersList.length > 0" class="renter-list">
+      <li *ngFor="let renter of rentersList" class="renter-card">
+        <h3>{{ renter.renterName }}</h3>
+        <p><strong>Mobile:</strong> {{ renter.renterMobile }}</p>
+        <p><strong>Email:</strong> {{ renter.renterEmail }}</p>
+        <p><strong>Photo ID No:</strong> {{ renter.renterPhotoIdNo }}</p>
+        <p><strong>Permanent Address:</strong> {{ renter.renterPermanentAddress }}</p>
+        <p><strong>Previous Address:</strong> {{ renter.renterPreviousAddress }}</p>
+        <p><strong>Status:</strong> {{ renter.status === 1 ? 'Active' : 'Inactive' }}</p>
+        <p><strong>Created On:</strong> {{ renter.createdOn | date:'medium' }}</p>
+      </li>
+    </ul>
+
+    <div *ngIf="!isLoading && rentersList.length === 0 && !error" class="message info">
+      No renters found.
+    </div>
+  </section>
+</div>

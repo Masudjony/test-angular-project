@@ -2,27 +2,29 @@
 <app-top-header></app-top-header>
 
 <div class="ParentSectionSection_Components_HTally">
-  <h1 class="TopHeading">Renter List</h1>
 
-  <section class="api-list" *ngIf="isAuthenticated">
-    <div class="message info" *ngIf="isLoading">{{ status }}</div>
-    <div class="message error" *ngIf="error">{{ error }}</div>
+    <h1 class="TopHeading">Renter</h1>
+    <div class="Body_ParentSectionSection_Components_HTally">
+        <div class="InnerPart_Body_Renter_Htally">
+            <div class="Parent_ActivityList_Dashboard TabsSection">
+                <div class="RemainActivityList_Tab_Button">
 
-    <ul *ngIf="!isLoading && rentersList.length > 0" class="renter-list">
-      <li *ngFor="let renter of rentersList" class="renter-card">
-        <h3>{{ renter.renterName }}</h3>
-        <p><strong>Mobile:</strong> {{ renter.renterMobile }}</p>
-        <p><strong>Email:</strong> {{ renter.renterEmail }}</p>
-        <p><strong>Photo ID No:</strong> {{ renter.renterPhotoIdNo }}</p>
-        <p><strong>Permanent Address:</strong> {{ renter.renterPermanentAddress }}</p>
-        <p><strong>Previous Address:</strong> {{ renter.renterPreviousAddress }}</p>
-        <p><strong>Status:</strong> {{ renter.status === 1 ? 'Active' : 'Inactive' }}</p>
-        <p><strong>Created On:</strong> {{ renter.createdOn | date:'medium' }}</p>
-      </li>
-    </ul>
+                    <button (click)="selectTab('RenterList')"
+                        [class.active]="activeTab === 'RenterList'">Renter<span></span></button>
 
-    <div *ngIf="!isLoading && rentersList.length === 0 && !error" class="message info">
-      No renters found.
+                    <button (click)="selectTab('AsignRenter')"
+                        [class.active]="activeTab === 'AsignRenter'">Asign Flat<span></span></button>
+
+                </div>
+
+                <div *ngIf="activeTab === 'RenterList'" class="RemainActivityList_tab_content">
+                    <app-renter-list></app-renter-list>
+                </div>
+
+                <div *ngIf="activeTab === 'AsignRenter'" class="RemainActivityList_tab_content">
+                    <app-assign-flat></app-assign-flat>
+                </div>
+            </div>
+        </div>
     </div>
-  </section>
 </div>
