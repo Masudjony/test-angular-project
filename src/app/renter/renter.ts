@@ -67,21 +67,26 @@ export class RenterComponent implements OnInit {
     this.rentersList = [];
 
     this.renters.list<ApiResponse>()
-  .pipe(finalize(() => (this.isLoading = false)))
-  .subscribe({
-    next: (res) => {
-      if (res && res.code === '000') {
-        this.rentersList = res.data || [];
-        this.status = `Total renters: ${res.totalRows}`;
-      } else {
-        this.error = res?.message || 'Unknown error occurred.';
-      }
-    },
-    error: (err) => {
-      this.error = err.message || 'Error fetching renters';
-    },
-  });
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: (res) => {
+          if (res && res.code === '000') {
+            this.rentersList = res.data || [];
 
+            // 🔥 Console Print All Renter Data
+            console.log('Renter Full Data:', this.rentersList);
+
+            this.status = `Total renters: ${res.totalRows}`;
+          } else {
+            this.error = res?.message || 'Unknown error occurred.';
+          }
+        },
+        error: (err) => {
+          this.error = err.message || 'Error fetching renters';
+        },
+      });
   }
+
+
 
 }
